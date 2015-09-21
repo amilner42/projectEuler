@@ -12,98 +12,63 @@ import java.util.List;
 //	
 //	Find the pair of pentagonal numbers, Pj and Pk, for which their sum and difference are pentagonal and D = |Pk − Pj| is minimised; what is the value of D?
 //---------- -----------------------------------------------------------------------------------------------------------------------
-// Solution 'not solved'
+// Solution correct
 
 public class Problem44 {
 
-	private static List<Long> pentagonalNumbers = new ArrayList<Long>();			// A list of pentagon-numbers that gets updated with a buffer of 50 numbers
-	private static int currentIndex = 0; 	// 
-	private static int comparingIndex;
-	private static long currentNumber = 1; 
-	private static long nextNumber = 5;
-	private static long foundDif = Long.MAX_VALUE; 						// The current difference with a successful pair 
-	
-	public static void main(String[] args) {
-		// TODO COMMENT 
-		while((nextNumber - currentNumber) < foundDif) {
-			// make sure there is enough pentagon-numbers
-			if((pentagonalNumbers.size() - currentIndex) < 50){
-				add100Numbers();
-			}
+	public static void main(String[]args) {
 
-			// go from right to left checking if it is a successful pair, stop if a pair is found
-			for(comparingIndex = currentIndex; comparingIndex >= 0; comparingIndex--) {
-				if(successfulpair()) {
-					foundDif = currentNumber - pentagonalNumbers.get(comparingIndex);
+        ArrayList<Long> currentList = new ArrayList<>();
+        boolean answerFound = false;
+        int currentRange = 0;
+		long currentSmallestDifference = 0;
+
+        // This while loop goes through, continually adding a new number to the list of pentagonal numbers and then
+        // traversing the list from right to left checking if the number-pairs are pentagonal. If it finds a pentagonal
+        // pair, a solution has been found, and now the only thing left to do is to make sure there are no other solutions
+		while(!answerFound) {
+			currentRange++;
+			currentList.add(generatePentagonalNumber(currentRange));
+			for(int i = currentRange - 2; i >= 0; i--) {
+				if(checkPentagonalPair(currentList.get(currentRange - 1) , currentList.get(i))) {
+                    answerFound = true;
+					currentSmallestDifference = currentList.get(currentRange - 1) - currentList.get(i);
+                    break;                                                                                   // break because no point checking any more to the left, the difference will be bigger guaranteed
+                }
+			}
+		}
+
+        // In this loop, we continue expanding the range and adding numbers to check if there is another solution with a
+        // a smaller difference. Once you add a new number to the group, and the difference is too big with the number
+        // right to the left of it, you can stop checking
+		while(true) {
+            currentList.add(generatePentagonalNumber(currentRange + 1));
+			if(currentList.get(currentRange) - currentList.get(currentRange - 1) > currentSmallestDifference) {
+				break;
+			}
+			for(int i = currentRange - 1; (currentList.get(currentRange) - currentList.get(i)) < currentSmallestDifference; i--) {
+				if(checkPentagonalPair(currentList.get(currentRange) , currentList.get(i))) {
+					currentSmallestDifference = currentList.get(currentRange) - currentList.get(i);
 					break;
 				}
 			}
-
-			// update
-			currentNumber = pentagonalNumbers.get(++currentIndex);
-			nextNumber = pentagonalNumbers.get(currentIndex + 1);
-			
-			//System.out.println(currentNumber);
+            currentRange++;
 		}
-		 
-		// Print out the answer
-		System.out.println(foundDif);
+		System.out.println(currentSmallestDifference);
 	}
 
-	// Private Function
-	//
-	//
-	private static boolean successfulpair() {
-		return findDif() && findSum();
+    // Returns true if both the sum and the difference of the two numbers are pentagonal
+	private static boolean checkPentagonalPair(long pent1, long pent2) {
+		return isPentagonal(pent1 - pent2) && isPentagonal(pent1 + pent2);
 	}
 
-	// Private Function
-	//
-	//
-	private static boolean findSum() {
-		int findIndex = currentIndex + 1;
-		long sum = currentNumber + pentagonalNumbers.get(comparingIndex); 
-
-		for(long numberCheck = pentagonalNumbers.get(findIndex); numberCheck <= sum; numberCheck = pentagonalNumbers.get(findIndex)) {
-			if(numberCheck == sum) {
-				return true; 
-			}
-			findIndex++; 
-		}
-
-		return false; 
-	}
-	
-	// Private Function
-	//
-	//
-	private static boolean findDif() {
-		int findIndex = 0; 
-		if(currentIndex != 0){
-			findIndex = currentIndex - 1;
-		}
-		
-		long dif = currentNumber - pentagonalNumbers.get(comparingIndex); 
-
-		for(long numberCheck = pentagonalNumbers.get(findIndex); numberCheck <= dif && findIndex >= 1; numberCheck = pentagonalNumbers.get(findIndex)) {
-			if(numberCheck == dif) {
-				return true; 
-			}
-			findIndex--; 
-		}
-
-		return false;
+    // Returns: true if number is pentagonal, false otherwise
+	private static boolean isPentagonal(long number) {
+		long n =  (long)((Math.sqrt(24 * number + 1) + 1) / 6);
+		return ((n * (3*n - 1) / 2) == number);
 	}
 
-	// Private Function
-	//
-	//
-	private static void add100Numbers() {		
-		for(int i = 0; i < 100; i++) {
-			int n = currentIndex + i;
-			long number = n*(3*n - 1)/2;
-			pentagonalNumbers.add(number);
-		}
+	private static long generatePentagonalNumber(long n) {
+		return n * (3 * n - 1) / 2;
 	}
-
 }
