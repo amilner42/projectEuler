@@ -1,2 +1,2 @@
 # Project Euler
-55 problems solved in Java with extra comments :)
+57 problems solved in Java with extra comments :)
