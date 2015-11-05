@@ -11,8 +11,7 @@ I highly recommend using: https://projecteuler.net/ as a way to gain critical th
 often spend too long learning about algorithms without applying them, and this can be detrimental to our learning. That
 being said, DO NOT use these solutions to avoid having to think about the problem yourself. I have posted these solutions
 to assist you if you are stuck on a problem for too long and feel that you need some assistance OR if you have already
-solved the problem and simply want a cleaner solution or just want to see how someone else did it. I repeat, DO NOT use 
-these solutions as a replacement for having to think about the problem, I'm not quite sure why you would even want to do
-that, it is only for your own learning...
+solved the problem and simply want to see how someone else did it. I repeat, DO NOT use these solutions as a replacement
+for having to think about the problem, I'm not quite sure why you would even want to do that, it is only for your own learning...
 
 Best of luck!
