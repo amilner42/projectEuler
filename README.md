@@ -1,6 +1,6 @@
 # Project Euler
 
-###### Problems Solved: 58
+###### Problems Solved: 59
 
 I have tried to make my solutions as clear as possible to help and encourage more people to start using Project Euler as
 a way to learn about both CS and Math! I have added plenty of comments on all solutions as well as explaining the 
