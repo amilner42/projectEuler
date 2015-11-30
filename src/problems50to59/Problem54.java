@@ -6,6 +6,14 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 
+// Question -----------------------------------------------------------------------------------------------------------------------
+//
+//  Question is very long, refer to link:
+//      https://projecteuler.net/problem=54
+//
+//---------- -----------------------------------------------------------------------------------------------------------------------
+// Solution correct
+
 public class Problem54 {
 
     public static void main(String[] args) throws IOException {
